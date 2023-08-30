@@ -1,4 +1,4 @@
-import { initRandColorArray } from "array-util";
+import { buildRandColorArray } from "array-util";
 
 // ----------------------------------------------------------------------------
 //                             Public Variables
@@ -49,7 +49,7 @@ function draw(grid) {
 
 // Set the color array to `n` random colors.
 function newColors(n) {
-    _colorArray = initRandColorArray(n);
+    _colorArray = buildRandColorArray(n);
 }
 
 // ----------------------------------------------------------------------------
@@ -142,7 +142,6 @@ function _initEventHandlers() {
     viewElements.pixPerCellInput.addEventListener("input", _showPixPerCell);
     viewElements.numStatesInput.addEventListener("input", _showNumStates);
 }
-
 
 // ----------------------------------------------------------------------------
 

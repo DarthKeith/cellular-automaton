@@ -1,8 +1,8 @@
 import {
-    initZeroArray,
-    initZeroArray2D,
+    buildZeroArray,
+    buildZeroArray2D,
     randInt,
-    initRandCubeArray
+    buildRandCubeArray
 } from "array-util";
 
 // ----------------------------------------------------------------------------
@@ -29,15 +29,15 @@ function randomizeCellStates() {
 
 // Initialize the data structures that hold cell states.
 function initCells(rows, cols) {
-    grid = initZeroArray2D(rows, cols);
-    _cellStates = initZeroArray(cols); 
-    _tempCellStates = initZeroArray(cols);
+    grid = buildZeroArray2D(rows, cols);
+    _cellStates = buildZeroArray(cols); 
+    _tempCellStates = buildZeroArray(cols);
     randomizeCellStates();
 }
 
 // Randomly generate a new rule.
 function newRule() {
-    _rule = initRandCubeArray(numStates);
+    _rule = buildRandCubeArray(numStates);
 }
 
 // Iterate the cellular automaton.
