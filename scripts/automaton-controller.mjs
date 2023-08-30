@@ -83,7 +83,7 @@ function _togglePause() {
 
 // Return window resize handler.
 function _getHandleResize() {
-    let timeout = 1;
+    let timeout = 0;
     function handleResize() {
         clearTimeout(timeout);
         timeout = setTimeout(_resize, RESIZE_DELAY);
