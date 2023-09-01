@@ -25,7 +25,7 @@ import { RESIZE_DELAY } from "constants";
 // Initialize the program.
 function init() {
     _refreshNumStates();
-    _changeColors();
+    newColors(numStates);
     _resize();
     _initEventHandlers();
     initUI();
@@ -62,15 +62,18 @@ function _refreshNumStates() {
     setNumStates(parseInt(viewElements.numStatesInput.value));
 }
 
-// Randomly generate new colors.
-function _changeColors() {
+// Event handler for changing colors.
+function _onChangeColors() {
     newColors(numStates);
+    if (_isPaused) {
+        draw(grid);
+    }
 }
 
 // Event handler for changing the number of possible cell states.
 function _onChangeNumStates() {
     _refreshNumStates();
-    _changeColors();
+    newColors(numStates);
     newRule();
     randomizeCellStates();
     clear2DArray(grid);
@@ -103,7 +106,7 @@ function _initEventHandlers() {
     window.addEventListener("keyup", _onKeypress);
     viewElements.pauseButton.addEventListener("click", _onTogglePause);
     viewElements.resetButton.addEventListener("click", randomizeCellStates);
-    viewElements.colorButton.addEventListener("click", _changeColors);
+    viewElements.colorButton.addEventListener("click", _onChangeColors);
     viewElements.ruleButton.addEventListener("click", newRule);
     viewElements.pixPerCellInput.addEventListener("change", _resize);
     viewElements.numStatesInput.addEventListener("change", _onChangeNumStates);
