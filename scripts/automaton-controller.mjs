@@ -67,8 +67,8 @@ function _changeColors() {
     newColors(numStates);
 }
 
-// Change the number of possible cell states.
-function _changeNumStates() {
+// Event handler for changing the number of possible cell states.
+function _onChangeNumStates() {
     _refreshNumStates();
     _changeColors();
     newRule();
@@ -76,37 +76,37 @@ function _changeNumStates() {
     clear2DArray(grid);
 }
 
-// Handler for pressing play/pause.
-function _togglePause() {
+// Event handler for pressing play/pause.
+function _onTogglePause() {
     _isPaused = !_isPaused;
 }
 
-// Return window resize handler.
-function _getHandleResize() {
+// Return window resize event handler.
+function _getOnResize() {
     let timeout = 0;
-    function handleResize() {
+    function onResize() {
         clearTimeout(timeout);
         timeout = setTimeout(_resize, RESIZE_DELAY);
     }
-    return handleResize;
+    return onResize;
 }
 
-// Keypress handler.
-function _handleKeypress(event) {
-    if (event.key === " ") _togglePause();
+// Keypress event handler.
+function _onKeypress(event) {
+    if (event.key === " ") _onTogglePause();
     else if (event.key === "Enter") newRule();
 }
 
 // Initialize event handlers.
 function _initEventHandlers() {
-    window.addEventListener("resize", _getHandleResize());
-    window.addEventListener("keyup", _handleKeypress);
-    viewElements.pauseButton.addEventListener("click", _togglePause);
+    window.addEventListener("resize", _getOnResize());
+    window.addEventListener("keyup", _onKeypress);
+    viewElements.pauseButton.addEventListener("click", _onTogglePause);
     viewElements.resetButton.addEventListener("click", randomizeCellStates);
     viewElements.colorButton.addEventListener("click", _changeColors);
     viewElements.ruleButton.addEventListener("click", newRule);
     viewElements.pixPerCellInput.addEventListener("change", _resize);
-    viewElements.numStatesInput.addEventListener("change", _changeNumStates);
+    viewElements.numStatesInput.addEventListener("change", _onChangeNumStates);
 }
 
 // ----------------------------------------------------------------------------
