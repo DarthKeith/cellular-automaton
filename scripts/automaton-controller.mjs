@@ -1,6 +1,5 @@
 import {
     grid,
-    numStates,
     setNumStates,
     randomizeCellStates,
     initCells,
@@ -25,10 +24,9 @@ import { RESIZE_DELAY } from "constants";
 // Initialize the program.
 function init() {
     _refreshNumStates();
-    newColors(numStates);
-    _resize();
-    _initEventHandlers();
     initUI();
+    _initEventHandlers();
+    _resize();
     newRule();
 }
 
@@ -64,7 +62,7 @@ function _refreshNumStates() {
 
 // Event handler for changing colors.
 function _onChangeColors() {
-    newColors(numStates);
+    newColors();
     if (_isPaused) {
         draw(grid);
     }
@@ -73,7 +71,6 @@ function _onChangeColors() {
 // Event handler for changing the number of possible cell states.
 function _onChangeNumStates() {
     _refreshNumStates();
-    newColors(numStates);
     newRule();
     randomizeCellStates();
     clear2DArray(grid);

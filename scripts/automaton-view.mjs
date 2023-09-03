@@ -1,4 +1,5 @@
 import { buildRandColorArray } from "array-util";
+import { MAX_NUM_STATES } from "constants";
 
 // ----------------------------------------------------------------------------
 //                             Public Variables
@@ -33,6 +34,7 @@ function initCanvases() {
 
 // Initialize the user interface.
 function initUI() {
+    newColors();
     _initSliders();
     _initEventHandlers();
 }
@@ -47,9 +49,9 @@ function draw(grid) {
                                       0, 0, _canvas.width, _canvas.height);
 }
 
-// Set the color array to `n` random colors.
-function newColors(n) {
-    _colorArray = buildRandColorArray(n);
+// Set the color array to random colors.
+function newColors() {
+    _colorArray = buildRandColorArray(MAX_NUM_STATES);
 }
 
 // ----------------------------------------------------------------------------
@@ -132,6 +134,7 @@ function _updateHiddenCanvas(grid) {
 
 // Display initial slider values.
 function _initSliders() {
+    viewElements.numStatesInput.max = MAX_NUM_STATES;
     _showPixPerCell();
     _showNumStates();
 }

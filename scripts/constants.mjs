@@ -1,5 +1,6 @@
 const RESIZE_DELAY = 200;
 const FPS = 20;
+const MAX_NUM_STATES = 5
 
-export { RESIZE_DELAY, FPS };
+export { RESIZE_DELAY, FPS, MAX_NUM_STATES };
 
