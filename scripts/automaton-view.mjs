@@ -144,6 +144,9 @@ function _initEventHandlers() {
     _canvas.addEventListener("click", _toggleSettings);
     viewElements.pixPerCellInput.addEventListener("input", _showPixPerCell);
     viewElements.numStatesInput.addEventListener("input", _showNumStates);
+    const blur = event => event.target.blur();
+    const blurOnClick = button => button.addEventListener("click", blur);
+    document.querySelectorAll("button").forEach(blurOnClick);
 }
 
 // ----------------------------------------------------------------------------
