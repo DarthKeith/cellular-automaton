@@ -74,6 +74,9 @@ function _onChangeNumStates() {
     newRule();
     randomizeCellStates();
     clear2DArray(grid);
+    if (_isPaused) {
+        draw(grid);
+    }
 }
 
 // Event handler for pressing play/pause.
