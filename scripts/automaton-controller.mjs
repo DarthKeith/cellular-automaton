@@ -97,6 +97,8 @@ function _getOnResize() {
 // Keypress event handler.
 function _onKeypress(event) {
     if (event.key === " ") _onTogglePause();
+    else if (event.key === "Backspace") randomizeCellStates();
+    else if (event.key === "c") _onChangeColors();
     else if (event.key === "Enter") newRule();
 }
 
