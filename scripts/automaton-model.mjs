@@ -53,12 +53,12 @@ function iterate() {
     [_cellStates, _tempCellStates] = [_tempCellStates, _cellStates];
 }
 
-// Shift the grid up by one row and insert the current array of cell states.
+// Shift grid down by one row and insert current array of cell states.
 function updateGrid() {
-    for (let row = 1; row < grid.length; row++) {
-        grid[row - 1] = grid[row];
+    for (let row = grid.length - 1; row > 0; row--) {
+        grid[row] = grid[row - 1];
     }
-    grid[grid.length - 1] = _cellStates.slice();
+    grid[0] = _cellStates.slice();
 }
 
 // ----------------------------------------------------------------------------
