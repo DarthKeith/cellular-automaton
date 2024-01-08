@@ -11,7 +11,7 @@ const viewElements = {
     colorButton: document.getElementById("color-btn"),
     ruleButton: document.getElementById("rule-btn"),
     pixPerCellInput: document.getElementById("pix-per-cell"),
-    numStatesInput: document.getElementById("num-states")
+    numStatesButtons: document.getElementById("num-states-btns")
 };
 
 // ----------------------------------------------------------------------------
@@ -35,7 +35,7 @@ function initCanvases() {
 // Initialize the user interface.
 function initUI() {
     newColors();
-    _initSliders();
+    _showPixPerCell();
     _initEventHandlers();
 }
 
@@ -76,11 +76,6 @@ let _colorArray; // Array of colors.
 // Display the current value of the pixels per cell slider.
 function _showPixPerCell() {
     _pixPerCellValue.value = viewElements.pixPerCellInput.value;
-}
-
-// Display the current value of the number of states slider.
-function _showNumStates() {
-    _numStatesValue.value = viewElements.numStatesInput.value;
 }
 
 // Toggle the visibility of the settings panel.
@@ -132,18 +127,10 @@ function _updateHiddenCanvas(grid) {
         }
 }
 
-// Display initial slider values.
-function _initSliders() {
-    viewElements.numStatesInput.max = MAX_NUM_STATES;
-    _showPixPerCell();
-    _showNumStates();
-}
-
 // Initialize event handlers for the display.
 function _initEventHandlers() {
     _canvas.addEventListener("click", _toggleSettings);
     viewElements.pixPerCellInput.addEventListener("input", _showPixPerCell);
-    viewElements.numStatesInput.addEventListener("input", _showNumStates);
     const blur = event => event.target.blur();
     const blurOnClick = button => button.addEventListener("click", blur);
     document.querySelectorAll("button").forEach(blurOnClick);

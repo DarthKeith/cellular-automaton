@@ -23,14 +23,12 @@
             <label>Model Controls</label>
             <div class="horizontal">
                 <div class="vertical">
-                    <label for="num-states">Number of States</label>
-                    <div class="horizontal">
-                        <div class="range-container">
-                            <input type="range" id="num-states"
-                                   name="num-states" min="2" max="5" value=4
-                                   step="1" />
-                        </div>
-                        <output id="num-states-val"></output>
+                    <label>Number of States</label>
+                    <div id="num-states-btns" class="horizontal">
+                        <button value="2">2</button>
+                        <button value="3">3</button>
+                        <button value="4">4</button>
+                        <button value="5">5</button>
                     </div>
                 </div>
                 <button id="rule-btn">Change Rule</button>

@@ -1,5 +1,6 @@
 import {
     grid,
+    numStates,
     setNumStates,
     randomizeCellStates,
     initCells,
@@ -15,7 +16,7 @@ import {
     newColors
 } from "automaton-view";
 import { clear2DArray } from "array-util";
-import { RESIZE_DELAY } from "constants";
+import { RESIZE_DELAY, DEFAULT_NUM_STATES } from "constants";
 
 // ----------------------------------------------------------------------------
 //                             Public Functions
@@ -23,7 +24,7 @@ import { RESIZE_DELAY } from "constants";
 
 // Initialize the program.
 function init() {
-    _refreshNumStates();
+    setNumStates(DEFAULT_NUM_STATES);
     initUI();
     _initEventHandlers();
     _resize();
@@ -55,11 +56,6 @@ function _resize() {
     draw(grid);
 }
 
-// Set the number of states to the current slider value.
-function _refreshNumStates() {
-    setNumStates(parseInt(viewElements.numStatesInput.value));
-}
-
 // Event handler for changing colors.
 function _onChangeColors() {
     newColors();
@@ -68,9 +64,12 @@ function _onChangeColors() {
     }
 }
 
-// Event handler for changing the number of possible cell states.
-function _onChangeNumStates() {
-    _refreshNumStates();
+// Event handler for changing the number of possible cell states to `n`.
+function _onChangeNumStates(n) {
+    if (n === numStates) {
+        return;
+    }
+    setNumStates(n);
     newRule();
     randomizeCellStates();
     clear2DArray(grid);
@@ -111,7 +110,10 @@ function _initEventHandlers() {
     viewElements.colorButton.addEventListener("click", _onChangeColors);
     viewElements.ruleButton.addEventListener("click", newRule);
     viewElements.pixPerCellInput.addEventListener("change", _resize);
-    viewElements.numStatesInput.addEventListener("change", _onChangeNumStates);
+    for (const button of viewElements.numStatesButtons.children) {
+        const n = parseInt(button.value);
+        button.addEventListener("click", () => _onChangeNumStates(n));
+    }
 }
 
 // ----------------------------------------------------------------------------
