@@ -19,26 +19,40 @@
 </head>
 <body>
     <div id="settings">
-        <div class="button-container">
-            <button id="pause-btn">Play/Pause</button>
-            <button id="reset-btn">Randomize Cells</button>
-            <button id="color-btn">Change Colors</button>
-            <button id="rule-btn">Change Rule</button>
-        </div>
-        <div class="range-container">
-            <label for="pix-per-cell">Pixels per Cell</label>
-            <div class="range-io">
-                <input type="range" id="pix-per-cell" name="pix-per-cell"
-                       min="1" max="20" value="5" step="1" />
-                <output id="pix-per-cell-val"></output>
+        <div class="vertical ui-border">
+            <label>Model Controls</label>
+            <div class="horizontal">
+                <div class="vertical">
+                    <label for="num-states">Number of States</label>
+                    <div class="horizontal">
+                        <div class="range-container">
+                            <input type="range" id="num-states"
+                                   name="num-states" min="2" max="5" value=4
+                                   step="1" />
+                        </div>
+                        <output id="num-states-val"></output>
+                    </div>
+                </div>
+                <button id="rule-btn">Change Rule</button>
+                <button id="reset-btn">Randomize Cells</button>
             </div>
         </div>
-        <div class="range-container">
-            <label for="num-states">Number of States</label>
-            <div class="range-io">
-                <input type="range" id="num-states" name="num-states" min="2"
-                       max="5" value=4 step="1" />
-                <output id="num-states-val"></output>
+        <div class="vertical ui-border">
+            <label>Display Controls</label>
+            <div class="horizontal">
+                <div class="vertical">
+                    <label for="pix-per-cell">Pixels per Cell</label>
+                    <div class="horizontal">
+                        <div class="range-container">
+                            <input type="range" id="pix-per-cell"
+                                   name="pix-per-cell" min="1" max="20"
+                                   value="5" step="1" />
+                        </div>
+                        <output id="pix-per-cell-val"></output>
+                    </div>
+                </div>
+                <button id="color-btn">Change Colors</button>
+                <button id="pause-btn">Play/Pause</button>
             </div>
         </div>
     </div>
