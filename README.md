@@ -25,20 +25,20 @@ $f: S^{3} \to S$, where $S$ is the set of cell states.
 
 # Controls
 
-* Play/Pause button
-  * Play/pause the iteration process.
-  * Keyboard shortcut: `<Space>`
-* Randomize Cells button
-  * Set the automaton's cells to random states.
-  * Keyboard shortcut: `<Backspace>`
-* Change Colors button
-  * Generate a set of random colors to assign to cell states.
-  * Keyboard shortcut: `<c>`
+* Number of States buttons
+  * Set the number of possible cell states.
 * Change Rule button
   * Randomly generate a new iteration rule.
   * Keyboard shortcut: `<Enter>`
-* Pixels Per Cell slider
-  * Set the display size of the cells.
-* Number of States slider
-  * Set the number of possible cell states.
+* Randomize Cells button
+  * Set the automaton's cells to random states.
+  * Keyboard shortcut: `<Backspace>`
+* Cell Size buttons
+  * Set the display size of the cells in pixels.
+* Change Colors button
+  * Generate a set of random colors to assign to cell states.
+  * Keyboard shortcut: `<c>`
+* Play/Pause button
+  * Play/pause the iteration process.
+  * Keyboard shortcut: `<Space>`
 
