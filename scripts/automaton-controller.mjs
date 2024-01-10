@@ -16,7 +16,11 @@ import {
     newColors
 } from "automaton-view";
 import { clear2DArray } from "array-util";
-import { RESIZE_DELAY, DEFAULT_NUM_STATES } from "constants";
+import {
+    RESIZE_DELAY,
+    DEFAULT_NUM_STATES,
+    DEFAULT_CELL_SIZE
+} from "constants";
 
 // ----------------------------------------------------------------------------
 //                             Public Functions
@@ -27,7 +31,7 @@ function init() {
     setNumStates(DEFAULT_NUM_STATES);
     initUI();
     _initEventHandlers();
-    _resize();
+    _resize(_cellSize);
     newRule();
 }
 
@@ -44,16 +48,26 @@ function update() {
 // ----------------------------------------------------------------------------
 
 let _isPaused = false;
+let _cellSize = DEFAULT_CELL_SIZE;
 
 // ----------------------------------------------------------------------------
 //                             Private Functions
 // ----------------------------------------------------------------------------
 
 // Resize the canvases, grid, and cell state arrays.
-function _resize() {
-    const [rows, cols] = initCanvases();
+function _resize(cellSize) {
+    const [rows, cols] = initCanvases(cellSize);
     initCells(rows, cols);
     draw(grid);
+}
+
+// Event handler for changing cell size.
+function _onSetSize(cellSize) {
+    if (cellSize === _cellSize) {
+        return;
+    }
+    _cellSize = cellSize;
+    _resize(cellSize);
 }
 
 // Event handler for changing colors.
@@ -88,7 +102,7 @@ function _getOnResize() {
     let timeout = 0;
     function onResize() {
         clearTimeout(timeout);
-        timeout = setTimeout(_resize, RESIZE_DELAY);
+        timeout = setTimeout(() => _resize(_cellSize), RESIZE_DELAY);
     }
     return onResize;
 }
@@ -109,7 +123,10 @@ function _initEventHandlers() {
     viewElements.resetButton.addEventListener("click", randomizeCellStates);
     viewElements.colorButton.addEventListener("click", _onChangeColors);
     viewElements.ruleButton.addEventListener("click", newRule);
-    viewElements.pixPerCellInput.addEventListener("change", _resize);
+    for (const button of viewElements.cellSizeButtons.children) {
+        const n = parseInt(button.value);
+        button.addEventListener("click", () => _onSetSize(n));
+    }
     for (const button of viewElements.numStatesButtons.children) {
         const n = parseInt(button.value);
         button.addEventListener("click", () => _onChangeNumStates(n));

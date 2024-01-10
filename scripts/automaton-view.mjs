@@ -9,7 +9,7 @@ const viewElements = {
     numStatesButtons: document.getElementById("num-states-btns"),
     ruleButton: document.getElementById("rule-btn"),
     resetButton: document.getElementById("reset-btn"),
-    pixPerCellInput: document.getElementById("pix-per-cell"),
+    cellSizeButtons: document.getElementById("cell-size-btns"),
     colorButton: document.getElementById("color-btn"),
     pauseButton: document.getElementById("pause-btn")
 };
@@ -19,10 +19,9 @@ const viewElements = {
 // ----------------------------------------------------------------------------
 
 // Initialize the canvases and return the dimensions of the hidden canvas.
-function initCanvases() {
-    const pixPerCell = parseInt(viewElements.pixPerCellInput.value);
-    const rows = Math.round(window.innerHeight / pixPerCell);
-    const cols = Math.round(window.innerWidth / pixPerCell);
+function initCanvases(cellSize) {
+    const rows = Math.round(window.innerHeight / cellSize);
+    const cols = Math.round(window.innerWidth / cellSize);
     _resizeCanvas(_hiddenCanvas, rows, cols);
     _hiddenData = _hiddenContext.createImageData(cols, rows);
     _pixelArray = _hiddenData.data;
@@ -35,7 +34,6 @@ function initCanvases() {
 // Initialize the user interface.
 function initUI() {
     newColors();
-    _showPixPerCell();
     _initEventHandlers();
 }
 
@@ -63,8 +61,6 @@ const _context = _canvas.getContext("2d");
 const _hiddenCanvas = document.createElement("canvas");
 const _hiddenContext = _hiddenCanvas.getContext("2d");
 const _settings = document.getElementById("settings");
-const _pixPerCellValue = document.getElementById("pix-per-cell-val");
-const _numStatesValue = document.getElementById("num-states-val");
 let _hiddenData; // Hidden canvas pixel data.
 let _pixelArray; // Hidden canvas pixel values.
 let _colorArray; // Array of colors.
@@ -72,11 +68,6 @@ let _colorArray; // Array of colors.
 // ----------------------------------------------------------------------------
 //                             Private Functions
 // ----------------------------------------------------------------------------
-
-// Display the current value of the pixels per cell slider.
-function _showPixPerCell() {
-    _pixPerCellValue.value = viewElements.pixPerCellInput.value;
-}
 
 // Toggle the visibility of the settings panel.
 function _toggleSettings() {
@@ -130,7 +121,6 @@ function _updateHiddenCanvas(grid) {
 // Initialize event handlers for the display.
 function _initEventHandlers() {
     _canvas.addEventListener("click", _toggleSettings);
-    viewElements.pixPerCellInput.addEventListener("input", _showPixPerCell);
     const blur = event => event.target.blur();
     const blurOnClick = button => button.addEventListener("click", blur);
     document.querySelectorAll("button").forEach(blurOnClick);

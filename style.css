@@ -10,6 +10,9 @@ button {
     text-decoration: none;
     margin: 0;
     cursor: pointer;
+    font-family: sans-serif;
+    font-weight: bold;
+    padding: 1em;
 }
 
 button:hover {
@@ -17,27 +20,18 @@ button:hover {
 }
 
 label {
+    background-color: rgba(0, 0, 0, 0.8);
     display: block;
     font-family: serif;
 }
 
-button, output, .range-container {
-    font-family: sans-serif;
-    font-weight: bold;
-    padding: 1em;
-}
-
-label, output, .range-container {
-    background-color: rgba(0, 0, 0, 0.8);
-}
-
-button, label, output, .range-container {
+button, label {
     color: white;
     font-size: 1em;
     text-align: center;
 }
 
-label, button, output, .range-container, .vertical, .horizontal {
+button, label, .vertical, .horizontal {
     flex: 1;
 }
 
@@ -53,7 +47,7 @@ label, button, output, .range-container, .vertical, .horizontal {
     display: flex;
 }
 
-label, button, output, .range-container, .vertical, .horizontal, #settings {
+button, label, .vertical, .horizontal, #settings {
     border: 1px solid white;
 }
 
