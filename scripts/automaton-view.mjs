@@ -6,12 +6,12 @@ import { MAX_NUM_STATES } from "constants";
 // ----------------------------------------------------------------------------
 
 const viewElements = {
-    pauseButton: document.getElementById("pause-btn"),
-    resetButton: document.getElementById("reset-btn"),
-    colorButton: document.getElementById("color-btn"),
+    numStatesButtons: document.getElementById("num-states-btns"),
     ruleButton: document.getElementById("rule-btn"),
+    resetButton: document.getElementById("reset-btn"),
     pixPerCellInput: document.getElementById("pix-per-cell"),
-    numStatesButtons: document.getElementById("num-states-btns")
+    colorButton: document.getElementById("color-btn"),
+    pauseButton: document.getElementById("pause-btn")
 };
 
 // ----------------------------------------------------------------------------
