@@ -1,5 +1,4 @@
 import {
-    grid,
     numStates,
     setNumStates,
     randomizeCellStates,
@@ -38,8 +37,8 @@ function init() {
 // Update the display with the current cell states and iterate the automaton.
 function update() {
     if (_isPaused) return;
-    updateGrid();
-    draw(grid);
+    updateGrid(_grid);
+    draw(_grid);
     iterate();
 }
 
@@ -49,6 +48,7 @@ function update() {
 
 let _isPaused = false;
 let _cellSize = DEFAULT_CELL_SIZE;
+let _grid;    // 2D grid of cell states.
 
 // ----------------------------------------------------------------------------
 //                             Private Functions
@@ -57,8 +57,8 @@ let _cellSize = DEFAULT_CELL_SIZE;
 // Resize the canvases, grid, and cell state arrays.
 function _resize(cellSize) {
     const [rows, cols] = initCanvases(cellSize);
-    initCells(rows, cols);
-    draw(grid);
+    _grid = initCells(rows, cols);
+    draw(_grid);
 }
 
 // Event handler for changing cell size.
@@ -74,7 +74,7 @@ function _onSetSize(cellSize) {
 function _onChangeColors() {
     newColors();
     if (_isPaused) {
-        draw(grid);
+        draw(_grid);
     }
 }
 
@@ -86,9 +86,9 @@ function _onChangeNumStates(n) {
     setNumStates(n);
     newRule();
     randomizeCellStates();
-    clear2DArray(grid);
+    clear2DArray(_grid);
     if (_isPaused) {
-        draw(grid);
+        draw(_grid);
     }
 }
 

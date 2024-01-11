@@ -9,7 +9,6 @@ import {
 //                             Public Variables
 // ----------------------------------------------------------------------------
 
-let grid;      // 2D grid of cell states.
 let numStates; // Number of possible cell states.
 
 // ----------------------------------------------------------------------------
@@ -28,11 +27,12 @@ function randomizeCellStates() {
 }
 
 // Initialize the data structures that hold cell states.
+// Return the 2D grid.
 function initCells(rows, cols) {
-    grid = buildZeroArray2D(rows, cols);
     _cellStates = buildZeroArray(cols); 
     _tempCellStates = buildZeroArray(cols);
     randomizeCellStates();
+    return buildZeroArray2D(rows, cols);
 }
 
 // Randomly generate a new rule.
@@ -54,7 +54,7 @@ function iterate() {
 }
 
 // Shift grid down by one row and insert current array of cell states.
-function updateGrid() {
+function updateGrid(grid) {
     for (let row = grid.length - 1; row > 0; row--) {
         grid[row] = grid[row - 1];
     }
@@ -72,7 +72,6 @@ let _rule;           // 3D array representing the automaton's iteration rule.
 // ----------------------------------------------------------------------------
 
 export {
-    grid,
     numStates,
     setNumStates,
     randomizeCellStates,
