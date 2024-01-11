@@ -6,28 +6,25 @@ import {
 } from "array-util";
 
 // ----------------------------------------------------------------------------
-//                             Public Variables
-// ----------------------------------------------------------------------------
-
-let numStates; // Number of possible cell states.
-
-// ----------------------------------------------------------------------------
 //                             Public Functions
 // ----------------------------------------------------------------------------
 
-// Set the number of possible cell states.
-function setNumStates(n) {
-    numStates = n;
+// Set the number of possible cell states, return whether the value changed.
+function changeNumStates(n) {
+    if (n === _numStates) {
+        return false;
+    }
+    _numStates = n;
+    return true;
 }
 
 // Set the automaton's cells to random states.
 function randomizeCellStates() {
     for (let i = 0; i < _cellStates.length; i++)
-        _cellStates[i] = randInt(numStates);
+        _cellStates[i] = randInt(_numStates);
 }
 
-// Initialize the data structures that hold cell states.
-// Return the 2D grid.
+// Initialize the arrays of cell states and return the 2D grid.
 function initCells(rows, cols) {
     _cellStates = buildZeroArray(cols); 
     _tempCellStates = buildZeroArray(cols);
@@ -37,7 +34,7 @@ function initCells(rows, cols) {
 
 // Randomly generate a new rule.
 function newRule() {
-    _rule = buildRandCubeArray(numStates);
+    _rule = buildRandCubeArray(_numStates);
 }
 
 // Iterate the cellular automaton.
@@ -65,15 +62,15 @@ function updateGrid(grid) {
 //                             Private Variables
 // ----------------------------------------------------------------------------
 
+let _numStates;      // Number of possible cell states.
+let _rule;           // 3D array representing the automaton's iteration rule.
 let _cellStates;     // 1D array of the automaton's cell states.
 let _tempCellStates; // Temporary 1D cell state array used during iteration.
-let _rule;           // 3D array representing the automaton's iteration rule.
 
 // ----------------------------------------------------------------------------
 
 export {
-    numStates,
-    setNumStates,
+    changeNumStates,
     randomizeCellStates,
     initCells,
     newRule,

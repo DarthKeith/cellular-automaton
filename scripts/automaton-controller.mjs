@@ -1,6 +1,5 @@
 import {
-    numStates,
-    setNumStates,
+    changeNumStates,
     randomizeCellStates,
     initCells,
     newRule,
@@ -27,11 +26,11 @@ import {
 
 // Initialize the program.
 function init() {
-    setNumStates(DEFAULT_NUM_STATES);
+    changeNumStates(DEFAULT_NUM_STATES);
+    newRule();
     initUI();
     _initEventHandlers();
     _resize(_cellSize);
-    newRule();
 }
 
 // Update the display with the current cell states and iterate the automaton.
@@ -62,7 +61,7 @@ function _resize(cellSize) {
 }
 
 // Event handler for changing cell size.
-function _onSetSize(cellSize) {
+function _onSetCellSize(cellSize) {
     if (cellSize === _cellSize) {
         return;
     }
@@ -80,10 +79,9 @@ function _onChangeColors() {
 
 // Event handler for changing the number of possible cell states to `n`.
 function _onChangeNumStates(n) {
-    if (n === numStates) {
+    if (!changeNumStates(n)) {
         return;
     }
-    setNumStates(n);
     newRule();
     randomizeCellStates();
     clear2DArray(_grid);
@@ -125,7 +123,7 @@ function _initEventHandlers() {
     viewElements.ruleButton.addEventListener("click", newRule);
     for (const button of viewElements.cellSizeButtons.children) {
         const n = parseInt(button.value);
-        button.addEventListener("click", () => _onSetSize(n));
+        button.addEventListener("click", () => _onSetCellSize(n));
     }
     for (const button of viewElements.numStatesButtons.children) {
         const n = parseInt(button.value);
