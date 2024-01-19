@@ -12,7 +12,6 @@ button {
     cursor: pointer;
     font-family: sans-serif;
     font-weight: bold;
-    padding: 1em 0;
 }
 
 button:hover {
@@ -40,17 +39,18 @@ button, .ctl-group > label, .ctl-group, .btn-group, #settings {
     border: 1px solid lightgrey;
 }
 
-.btn-group label {
-    border-width: 0 0 1px 0;
+.btn-group label, .btn-group button {
     border-style: solid;
     border-color: grey;
+}
+
+.btn-group label {
+    border-width: 0 0 1px 0;
 }
 
 /* Create 1px divider between buttons */
 .btn-group button:nth-child(n + 2) {
     border-width: 0 0 0 1px;
-    border-style: solid;
-    border-color: grey;
 }
 
 .btn-group button:first-child {
@@ -92,10 +92,18 @@ button, .ctl-group > label, .ctl-group, .btn-group, #settings {
     grid-auto-rows: 1fr;
 }
 
+button {
+    padding: 0.2em 0;
+}
+
 /* Tablet Layout */
 @media (min-width: 768px) {
     #settings {
         grid-template-columns: 1fr 1fr;
+    }
+
+    button {
+        padding: 1em 0;
     }
 }
 
