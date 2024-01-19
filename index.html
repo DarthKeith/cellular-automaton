@@ -19,28 +19,30 @@
 </head>
 <body>
     <div id="settings">
-        <div class="vertical">
+        <div class="ctl-group">
             <label>Model Controls</label>
-            <div class="horizontal">
-                <div class="vertical">
+            <div id="model-ctls">
+                <div class="btn-group">
                     <label>Number of States</label>
-                    <div id="num-states-btns" class="horizontal">
+                    <div id="num-states-btns" class="btn-row">
                         <button value="2">2</button>
                         <button value="3">3</button>
                         <button value="4">4</button>
                         <button value="5">5</button>
                     </div>
                 </div>
-                <button id="rule-btn">Change Rule</button>
-                <button id="reset-btn">Randomize Cells</button>
+                <div class="btn-row">
+                    <button id="rule-btn">Change Rule</button>
+                    <button id="reset-btn">Randomize Cells</button>
+                </div>
             </div>
         </div>
-        <div class="vertical">
+        <div class="ctl-group">
             <label>Display Controls</label>
-            <div class="horizontal">
-                <div class="vertical">
+            <div id="display-ctls">
+                <div class="btn-group">
                     <label>Cell Size</label>
-                    <div id="cell-size-btns" class="horizontal">
+                    <div id="cell-size-btns" class="btn-row">
                         <button value="1">1</button>
                         <button value="2">2</button>
                         <button value="3">3</button>
@@ -50,8 +52,10 @@
                         <button value="20">20</button>
                     </div>
                 </div>
-                <button id="color-btn">Change Colors</button>
-                <button id="pause-btn">Play/Pause</button>
+                <div class="btn-row">
+                    <button id="color-btn">Change Colors</button>
+                    <button id="pause-btn">Play/Pause</button>
+                </div>
             </div>
         </div>
     </div>

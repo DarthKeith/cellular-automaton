@@ -72,7 +72,7 @@ let _colorArray; // Array of colors.
 // Toggle the visibility of the settings panel.
 function _toggleSettings() {
     if (_settings.style.display === "none") {
-        _settings.style.display = "flex";
+        _settings.style.display = "grid";
         _canvas.style.cursor = "auto";
     } else {
         _settings.style.display = "none";

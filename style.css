@@ -12,7 +12,7 @@ button {
     cursor: pointer;
     font-family: sans-serif;
     font-weight: bold;
-    padding: 1em;
+    padding: 1em 0;
 }
 
 button:hover {
@@ -23,6 +23,7 @@ label {
     background-color: rgba(0, 0, 0, 0.8);
     display: block;
     font-family: serif;
+    padding: 1px 0;
 }
 
 button, label {
@@ -31,24 +32,29 @@ button, label {
     text-align: center;
 }
 
-button, label, .vertical, .horizontal {
-    flex: 1;
+.ctl-group > label {
+    font-size: 1.5em;
 }
 
-.vertical {
-    flex-flow: column nowrap;
+button, .ctl-group > label, .ctl-group, .btn-group, #settings {
+    border: 1px solid lightgrey;
 }
 
-.horizontal, #settings {
-    flex-flow: row wrap;
+.btn-group label {
+    border-width: 0 0 1px 0;
+    border-style: solid;
+    border-color: grey;
 }
 
-.vertical, .horizontal, #settings {
-    display: flex;
+/* Create 1px divider between buttons */
+.btn-group button:nth-child(n + 2) {
+    border-width: 0 0 0 1px;
+    border-style: solid;
+    border-color: grey;
 }
 
-button, label, .vertical, .horizontal, #settings {
-    border: 1px solid white;
+.btn-group button:first-child {
+    border: none;
 }
 
 #canvas {
@@ -60,5 +66,47 @@ button, label, .vertical, .horizontal, #settings {
     top: 0;
     left: 0;
     right: 0;
+}
+
+#settings, #model-ctls, #display-ctls, .ctl-group, .btn-row {
+    display: grid;
+}
+
+.btn-row {
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+}
+
+.ctl-group, .btn-group {
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content 1fr;
+}
+
+/* Mobile Layout */
+#settings {
+    grid-template-columns: 1fr;
+}
+
+#model-ctls, #display-ctls {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 1fr;
+}
+
+/* Tablet Layout */
+@media (min-width: 768px) {
+    #settings {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* Desktop Layout */
+@media (min-width: 1200px) {
+    /* Flatten each control group. */
+    #model-ctls {
+        grid-template-columns: 1fr 2fr;
+    }
+    #display-ctls {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
