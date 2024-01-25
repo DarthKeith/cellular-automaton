@@ -18,6 +18,11 @@ button:hover {
     background-color: rgba(127, 127, 127, 0.75);
 }
 
+.selected, .selected:hover {
+    background-color: rgba(180, 180, 180, 0.95);
+    cursor: default;
+}
+
 label {
     background-color: rgba(0, 0, 0, 0.8);
     display: block;
@@ -58,7 +63,7 @@ button, .ctl-group > label, .ctl-group, .btn-group, #settings {
 }
 
 #canvas {
-    cursor = "auto";
+    cursor: default;
 }
 
 #settings {

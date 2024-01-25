@@ -1,5 +1,9 @@
 import { buildRandColorArray } from "array-util";
-import { MAX_NUM_STATES } from "constants";
+import {
+    MAX_NUM_STATES,
+    DEFAULT_NUM_STATES,
+    DEFAULT_CELL_SIZE
+ } from "constants";
 
 // ----------------------------------------------------------------------------
 //                             Public Variables
@@ -35,6 +39,7 @@ function initCanvases(cellSize) {
 function initUI() {
     newColors();
     _initEventHandlers();
+    _selectDefaults();
 }
 
 // Display a representation of the current grid on the canvas.
@@ -73,7 +78,7 @@ let _colorArray; // Array of colors.
 function _toggleSettings() {
     if (_settings.style.display === "none") {
         _settings.style.display = "grid";
-        _canvas.style.cursor = "auto";
+        _canvas.style.cursor = "default";
     } else {
         _settings.style.display = "none";
         _canvas.style.cursor = "none";
@@ -118,12 +123,44 @@ function _updateHiddenCanvas(grid) {
         }
 }
 
+// Make button appear selected/unselected.
+const _select = button => button.classList.add("selected");
+const _deselect = button => button.classList.remove("selected");
+
 // Initialize event handlers for the display.
 function _initEventHandlers() {
     _canvas.addEventListener("click", _toggleSettings);
     const blur = event => event.target.blur();
     const blurOnClick = button => button.addEventListener("click", blur);
     document.querySelectorAll("button").forEach(blurOnClick);
+    function selectChildOnClick(div) {
+        function setSelected(event) {
+            if (event.target.tagName !== "BUTTON") {
+                return;
+            }
+            for (const button of div.children) {
+                _deselect(button);
+            }
+            _select(event.target);
+        }
+        div.addEventListener("click", setSelected);
+    }
+    selectChildOnClick(viewElements.numStatesButtons);
+    selectChildOnClick(viewElements.cellSizeButtons);
+}
+
+// Select default buttons.
+function _selectDefaults() {
+    function selectButton(div, value) {
+        for (const button of div.children) {
+            if (parseInt(button.getAttribute("value")) === value) {
+                _select(button);
+                return;
+            }
+        }
+    }
+    selectButton(viewElements.numStatesButtons, DEFAULT_NUM_STATES);
+    selectButton(viewElements.cellSizeButtons, DEFAULT_CELL_SIZE);
 }
 
 // ----------------------------------------------------------------------------
