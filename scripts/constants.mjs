@@ -1,14 +1,16 @@
 const RESIZE_DELAY = 200;
-const FPS = 20;
+const FPS = 60;
 const MAX_NUM_STATES = 5;
 const DEFAULT_NUM_STATES = 4;
 const DEFAULT_CELL_SIZE = 5;
+const SCROLL_DIST = 2;
 
 export {
     RESIZE_DELAY,
     FPS,
     MAX_NUM_STATES,
     DEFAULT_NUM_STATES,
-    DEFAULT_CELL_SIZE
+    DEFAULT_CELL_SIZE,
+    SCROLL_DIST
 };
 

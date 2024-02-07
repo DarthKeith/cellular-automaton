@@ -23,14 +23,6 @@ function buildRandColorArray(len) {
     return buildZeroArray(len).map(_randColor);
 }
 
-// Set all elements of a 2D array to 0.
-function clear2DArray(array) {
-    const [rows, cols] = [array.length, array[0].length];
-    for (let row = 0; row < rows; row++)
-        for (let col = 0; col < cols; col++)
-            array[row][col] = 0;
-}
-
 // ----------------------------------------------------------------------------
 //                             Private Functions
 // ----------------------------------------------------------------------------
@@ -57,7 +49,6 @@ export {
     buildZeroArray2D,
     randInt,
     buildRandCubeArray,
-    buildRandColorArray,
-    clear2DArray
+    buildRandColorArray
 };
 

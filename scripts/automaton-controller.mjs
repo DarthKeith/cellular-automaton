@@ -3,17 +3,15 @@ import {
     randomizeCellStates,
     initCells,
     newRule,
-    iterate,
-    updateGrid
+    getNextCellStates
 } from "automaton-model";
 import {
     viewElements,
     initCanvases,
     initUI,
-    draw,
+    drawNextFrame,
     newColors
 } from "automaton-view";
-import { clear2DArray } from "array-util";
 import {
     RESIZE_DELAY,
     DEFAULT_NUM_STATES,
@@ -28,17 +26,16 @@ import {
 function init() {
     changeNumStates(DEFAULT_NUM_STATES);
     newRule();
+    newColors();
     initUI();
     _initEventHandlers();
     _resize(_cellSize);
 }
 
-// Update the display with the current cell states and iterate the automaton.
+// Update the display with the next frame of animation.
 function update() {
     if (_isPaused) return;
-    updateGrid(_grid);
-    draw(_grid);
-    iterate();
+    drawNextFrame(_cellSize, getNextCellStates);
 }
 
 // ----------------------------------------------------------------------------
@@ -47,17 +44,16 @@ function update() {
 
 let _isPaused = false;
 let _cellSize = DEFAULT_CELL_SIZE;
-let _grid;    // 2D grid of cell states.
 
 // ----------------------------------------------------------------------------
 //                             Private Functions
 // ----------------------------------------------------------------------------
 
-// Resize the canvases, grid, and cell state arrays.
+// Resize the canvases and cell state arrays.
 function _resize(cellSize) {
-    const [rows, cols] = initCanvases(cellSize);
-    _grid = initCells(rows, cols);
-    draw(_grid);
+    const cols = initCanvases(cellSize);
+    initCells(cols);
+    drawNextFrame(cellSize, getNextCellStates);
 }
 
 // Event handler for changing cell size.
@@ -69,14 +65,6 @@ function _onSetCellSize(cellSize) {
     _resize(cellSize);
 }
 
-// Event handler for changing colors.
-function _onChangeColors() {
-    newColors();
-    if (_isPaused) {
-        draw(_grid);
-    }
-}
-
 // Event handler for changing the number of possible cell states to `n`.
 function _onChangeNumStates(n) {
     if (!changeNumStates(n)) {
@@ -84,10 +72,6 @@ function _onChangeNumStates(n) {
     }
     newRule();
     randomizeCellStates();
-    clear2DArray(_grid);
-    if (_isPaused) {
-        draw(_grid);
-    }
 }
 
 // Event handler for pressing play/pause.
@@ -109,7 +93,7 @@ function _getOnResize() {
 function _onKeypress(event) {
     if (event.key === " ") _onTogglePause();
     else if (event.key === "Backspace") randomizeCellStates();
-    else if (event.key === "c") _onChangeColors();
+    else if (event.key === "c") newColors();
     else if (event.key === "Enter") newRule();
 }
 
@@ -119,7 +103,7 @@ function _initEventHandlers() {
     window.addEventListener("keyup", _onKeypress);
     viewElements.pauseButton.addEventListener("click", _onTogglePause);
     viewElements.resetButton.addEventListener("click", randomizeCellStates);
-    viewElements.colorButton.addEventListener("click", _onChangeColors);
+    viewElements.colorButton.addEventListener("click", newColors);
     viewElements.ruleButton.addEventListener("click", newRule);
     for (const button of viewElements.cellSizeButtons.children) {
         const n = parseInt(button.value);

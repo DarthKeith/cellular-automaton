@@ -2,7 +2,8 @@ import { buildRandColorArray } from "array-util";
 import {
     MAX_NUM_STATES,
     DEFAULT_NUM_STATES,
-    DEFAULT_CELL_SIZE
+    DEFAULT_CELL_SIZE,
+    SCROLL_DIST
  } from "constants";
 
 // ----------------------------------------------------------------------------
@@ -22,53 +23,60 @@ const viewElements = {
 //                             Public Functions
 // ----------------------------------------------------------------------------
 
-// Initialize the canvases and return the dimensions of the hidden canvas.
+// Initialize the canvases and return the automaton length in cells.
 function initCanvases(cellSize) {
-    const rows = Math.round(window.innerHeight / cellSize);
-    const cols = Math.round(window.innerWidth / cellSize);
-    _resizeCanvas(_hiddenCanvas, rows, cols);
-    _hiddenData = _hiddenContext.createImageData(cols, rows);
-    _pixelArray = _hiddenData.data;
+    _resizeCanvas(_canvas, window.innerWidth, window.innerHeight);
+    const cols = Math.round(_canvas.width / cellSize);
+    const rows = 1 + Math.ceil(_canvas.height / cellSize);
+    _resizeCanvas(_gridCanvas, cols, rows);
+    _resizeCanvas(_rowCanvas, cols, 1);
+    _rowImgData = _rowContext.createImageData(cols, 1);
+    _pixelArray = _rowImgData.data;
     _initAlpha(_pixelArray);
-    _resizeToViewport(_canvas);
-    _disableSmoothing();
-    return [rows, cols];
+    _disableSmoothing(_context);
+    _drawHeight = rows * cellSize;
+    _offset = -SCROLL_DIST;
+    return cols;
 }
 
 // Initialize the user interface.
 function initUI() {
-    newColors();
     _initEventHandlers();
     _selectDefaults();
 }
 
-// Display a representation of the current grid on the canvas.
-function draw(grid) {
-    const rows = grid.length;
-    const cols = grid[0].length;
-    _updateHiddenCanvas(grid);
-    _hiddenContext.putImageData(_hiddenData, 0, 0);
-    _context.drawImage(_hiddenCanvas, 0, 0, cols, rows,
-                                      0, 0, _canvas.width, _canvas.height);
+// Draw the next frame of animation.
+function drawNextFrame(cellSize, getNextCellStates) {
+    _offset += SCROLL_DIST;
+    if (_offset > 0) {
+        const n = Math.ceil(_offset / cellSize);
+        _scrollGrid(n, getNextCellStates);
+        _offset -= n * cellSize;
+    }
+    _context.drawImage(_gridCanvas, 0, _offset, _canvas.width, _drawHeight);
 }
 
 // Set the color array to random colors.
 function newColors() {
-    _colorArray = buildRandColorArray(MAX_NUM_STATES);
+    _colorMap = buildRandColorArray(MAX_NUM_STATES);
 }
 
 // ----------------------------------------------------------------------------
 //                             Private Variables
 // ----------------------------------------------------------------------------
 
-const _canvas = document.getElementById("canvas");
-const _context = _canvas.getContext("2d");
-const _hiddenCanvas = document.createElement("canvas");
-const _hiddenContext = _hiddenCanvas.getContext("2d");
 const _settings = document.getElementById("settings");
-let _hiddenData; // Hidden canvas pixel data.
-let _pixelArray; // Hidden canvas pixel values.
-let _colorArray; // Array of colors.
+const _canvas = document.getElementById("canvas");
+const _gridCanvas = document.createElement("canvas");
+const _rowCanvas = document.createElement("canvas");
+const _context = _canvas.getContext("2d", {alpha: false});
+const _gridContext = _gridCanvas.getContext("2d", {alpha: false});
+const _rowContext = _rowCanvas.getContext("2d", {alpha: false});
+let _rowImgData; // Image data for row of pixels to draw onto grid canvas.
+let _pixelArray; // Pixel array for row of pixels.
+let _colorMap; // Array mapping cell states to colors.
+let _drawHeight; // Height to draw image onto canvas.
+let _offset; // Vertical downward distance from top to draw image onto canvas.
 
 // ----------------------------------------------------------------------------
 //                             Private Functions
@@ -86,14 +94,9 @@ function _toggleSettings() {
 }
 
 // Set the dimensions of a canvas.
-function _resizeCanvas(canvas, height, width) {
-    canvas.height = height;
+function _resizeCanvas(canvas, width, height) {
     canvas.width = width;
-}
-
-// Set the dimensions of a canvas to the viewport dimensions.
-function _resizeToViewport(canvas) {
-    _resizeCanvas(canvas, window.innerHeight, window.innerWidth);
+    canvas.height = height;
 }
 
 // Set alpha to max value for 1D array of RBGA color values.
@@ -102,25 +105,34 @@ function _initAlpha(array) {
         array[i] = 255;
 }
 
-// Disable image smoothing for the canvas.
-function _disableSmoothing() {
-    _context.imageSmoothingEnabled       = false;
-    _context.webkitImageSmoothingEnabled = false;
-    _context.msimageSmoothingEnabled     = false;
+// Disable image smoothing for a canvas.
+function _disableSmoothing(context) {
+    context.imageSmoothingEnabled       = false;
+    context.webkitImageSmoothingEnabled = false;
+    context.msimageSmoothingEnabled     = false;
 }
 
-// Update the hidden canvas to represent the current grid.
-function _updateHiddenCanvas(grid) {
-    const rows = grid.length;
-    const cols = grid[0].length;
+// Draw the given cell states onto the pixel array using the color map.
+function _drawRow(cellStates) {
     let i = 0;
-    for (let row = 0; row < rows; row++)
-        for (let col = 0; col < cols; col++) {
-            [_pixelArray[i],
-             _pixelArray[i + 1],
-             _pixelArray[i + 2]] = _colorArray[grid[row][col]];
-            i += 4;
-        }
+    for (const state of cellStates) {
+        [_pixelArray[i],
+         _pixelArray[i + 1],
+         _pixelArray[i + 2]] = _colorMap[state];
+        i += 4;
+    }
+}
+
+// Translate grid down by `n` rows and insert new rows.
+function _scrollGrid(n, getNextCellStates) {
+    const gridImgData = _gridContext.getImageData(0, 0, _gridCanvas.width,
+                                                        _gridCanvas.height);
+    _gridContext.putImageData(gridImgData, 0, n);
+    while (n > 0) {
+        n -= 1;
+        _drawRow(getNextCellStates());
+        _gridContext.putImageData(_rowImgData, 0, n);
+    }
 }
 
 // Make button appear selected/unselected.
@@ -169,7 +181,7 @@ export {
     viewElements,
     initCanvases,
     initUI,
-    draw,
+    drawNextFrame,
     newColors
 };
 

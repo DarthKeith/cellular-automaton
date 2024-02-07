@@ -24,12 +24,11 @@ function randomizeCellStates() {
         _cellStates[i] = randInt(_numStates);
 }
 
-// Initialize the arrays of cell states and return the 2D grid.
-function initCells(rows, cols) {
-    _cellStates = buildZeroArray(cols); 
-    _tempCellStates = buildZeroArray(cols);
+// Initialize arrays to store `n` cell states.
+function initCells(n) {
+    _cellStates = buildZeroArray(n); 
+    _tempCellStates = buildZeroArray(n);
     randomizeCellStates();
-    return buildZeroArray2D(rows, cols);
 }
 
 // Randomly generate a new rule.
@@ -37,25 +36,11 @@ function newRule() {
     _rule = buildRandCubeArray(_numStates);
 }
 
-// Iterate the cellular automaton.
-function iterate() {
-    const lastCell = _cellStates.length - 1;
-    for (let i = 0; i <= lastCell; i++) {
-        const left = i === 0 ? lastCell : i - 1;
-        const right = i === lastCell ? 0 : i + 1;
-        _tempCellStates[i] = _rule[_cellStates[left]]
-                                  [_cellStates[i]]
-                                  [_cellStates[right]];
-    }
-    [_cellStates, _tempCellStates] = [_tempCellStates, _cellStates];
-}
-
-// Shift grid down by one row and insert current array of cell states.
-function updateGrid(grid) {
-    for (let row = grid.length - 1; row > 0; row--) {
-        grid[row] = grid[row - 1];
-    }
-    grid[0] = _cellStates.slice();
+// Return a copy of the cell state array before iterating.
+function getNextCellStates() {
+    const cellStates = _cellStates.slice()
+    _iterate();
+    return cellStates;
 }
 
 // ----------------------------------------------------------------------------
@@ -68,13 +53,29 @@ let _cellStates;     // 1D array of the automaton's cell states.
 let _tempCellStates; // Temporary 1D cell state array used during iteration.
 
 // ----------------------------------------------------------------------------
+//                             Private Functions
+// ----------------------------------------------------------------------------
+
+// Iterate the cellular automaton.
+function _iterate() {
+    const lastCell = _cellStates.length - 1;
+    for (let i = 0; i <= lastCell; i++) {
+        const left = i === 0 ? lastCell : i - 1;
+        const right = i === lastCell ? 0 : i + 1;
+        _tempCellStates[i] = _rule[_cellStates[left]]
+                                  [_cellStates[i]]
+                                  [_cellStates[right]];
+    }
+    [_cellStates, _tempCellStates] = [_tempCellStates, _cellStates];
+}
+
+// ----------------------------------------------------------------------------
 
 export {
     changeNumStates,
     randomizeCellStates,
     initCells,
     newRule,
-    iterate,
-    updateGrid
+    getNextCellStates
 };
 
