@@ -10,7 +10,8 @@ import {
     initCanvases,
     initUI,
     drawNextFrame,
-    newColors
+    newColors,
+    changeCellSize
 } from "automaton-view";
 import {
     RESIZE_DELAY,
@@ -29,13 +30,13 @@ function init() {
     newColors();
     initUI();
     _initEventHandlers();
-    _resize(_cellSize);
+    _resize();
 }
 
 // Update the display with the next frame of animation.
 function update() {
     if (_isPaused) return;
-    drawNextFrame(_cellSize, getNextCellStates);
+    drawNextFrame(getNextCellStates);
 }
 
 // ----------------------------------------------------------------------------
@@ -43,33 +44,27 @@ function update() {
 // ----------------------------------------------------------------------------
 
 let _isPaused = false;
-let _cellSize = DEFAULT_CELL_SIZE;
 
 // ----------------------------------------------------------------------------
 //                             Private Functions
 // ----------------------------------------------------------------------------
 
 // Resize the canvases and cell state arrays.
-function _resize(cellSize) {
-    const cols = initCanvases(cellSize);
+function _resize() {
+    const cols = initCanvases();
     initCells(cols);
-    drawNextFrame(cellSize, getNextCellStates);
+    drawNextFrame(getNextCellStates);
 }
 
 // Event handler for changing cell size.
 function _onSetCellSize(cellSize) {
-    if (cellSize === _cellSize) {
-        return;
-    }
-    _cellSize = cellSize;
-    _resize(cellSize);
+    if (!changeCellSize(cellSize)) return;
+    _resize();
 }
 
 // Event handler for changing the number of possible cell states to `n`.
 function _onChangeNumStates(n) {
-    if (!changeNumStates(n)) {
-        return;
-    }
+    if (!changeNumStates(n)) return;
     newRule();
     randomizeCellStates();
 }
@@ -84,7 +79,7 @@ function _getOnResize() {
     let timeout = 0;
     function onResize() {
         clearTimeout(timeout);
-        timeout = setTimeout(() => _resize(_cellSize), RESIZE_DELAY);
+        timeout = setTimeout(_resize, RESIZE_DELAY);
     }
     return onResize;
 }

@@ -24,17 +24,17 @@ const viewElements = {
 // ----------------------------------------------------------------------------
 
 // Initialize the canvases and return the automaton length in cells.
-function initCanvases(cellSize) {
+function initCanvases() {
     _resizeCanvas(_canvas, window.innerWidth, window.innerHeight);
-    const cols = Math.round(_canvas.width / cellSize);
-    const rows = 1 + Math.ceil(_canvas.height / cellSize);
+    const cols = Math.round(_canvas.width / _cellSize);
+    const rows = 1 + Math.ceil(_canvas.height / _cellSize);
     _resizeCanvas(_gridCanvas, cols, rows);
     _resizeCanvas(_rowCanvas, cols, 1);
     _rowImgData = _rowContext.createImageData(cols, 1);
     _pixelArray = _rowImgData.data;
     _initAlpha(_pixelArray);
     _disableSmoothing(_context);
-    _drawHeight = rows * cellSize;
+    _drawHeight = rows * _cellSize;
     _offset = -SCROLL_DIST;
     return cols;
 }
@@ -46,12 +46,12 @@ function initUI() {
 }
 
 // Draw the next frame of animation.
-function drawNextFrame(cellSize, getNextCellStates) {
+function drawNextFrame(getNextCellStates) {
     _offset += SCROLL_DIST;
     if (_offset > 0) {
-        const n = Math.ceil(_offset / cellSize);
+        const n = Math.ceil(_offset / _cellSize);
         _scrollGrid(n, getNextCellStates);
-        _offset -= n * cellSize;
+        _offset -= n * _cellSize;
     }
     _context.drawImage(_gridCanvas, 0, _offset, _canvas.width, _drawHeight);
 }
@@ -59,6 +59,15 @@ function drawNextFrame(cellSize, getNextCellStates) {
 // Set the color array to random colors.
 function newColors() {
     _colorMap = buildRandColorArray(MAX_NUM_STATES);
+}
+
+// Set the cell size in pixels, return whether the value changed.
+function changeCellSize(n) {
+    if (n === _cellSize) {
+        return false;
+    }
+    _cellSize = n;
+    return true;
 }
 
 // ----------------------------------------------------------------------------
@@ -75,6 +84,7 @@ const _rowContext = _rowCanvas.getContext("2d", {alpha: false});
 let _rowImgData; // Image data for row of pixels to draw onto grid canvas.
 let _pixelArray; // Pixel array for row of pixels.
 let _colorMap; // Array mapping cell states to colors.
+let _cellSize = DEFAULT_CELL_SIZE; // Width of each cell in pixels.
 let _drawHeight; // Height to draw image onto canvas.
 let _offset; // Vertical downward distance from top to draw image onto canvas.
 
@@ -182,6 +192,7 @@ export {
     initCanvases,
     initUI,
     drawNextFrame,
-    newColors
+    newColors,
+    changeCellSize
 };
 
