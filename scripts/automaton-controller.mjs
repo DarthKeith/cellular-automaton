@@ -8,6 +8,7 @@ import {
 import {
     viewElements,
     initCanvases,
+    verticalResize,
     initUI,
     drawNextFrame,
     newColors,
@@ -77,9 +78,12 @@ function _onTogglePause() {
 // Return window resize event handler.
 function _getOnResize() {
     let timeout = 0;
+    function doResize() {
+        if (!verticalResize()) _resize();
+    }
     function onResize() {
         clearTimeout(timeout);
-        timeout = setTimeout(_resize, RESIZE_DELAY);
+        timeout = setTimeout(doResize, RESIZE_DELAY);
     }
     return onResize;
 }

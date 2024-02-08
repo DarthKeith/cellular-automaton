@@ -39,6 +39,24 @@ function initCanvases() {
     return cols;
 }
 
+// Resize the canvases if the window was only resized vertically.
+// Return whether a resize was performed.
+function verticalResize() {
+    if (_canvas.width !== window.innerWidth) {
+        return false;
+    }
+    _resizeCanvas(_canvas, window.innerWidth, window.innerHeight);
+    const rows = 1 + Math.ceil(_canvas.height / _cellSize);
+    const imgData = _gridContext.getImageData(0, 0, _gridCanvas.width,
+                                                    _gridCanvas.height);
+    _resizeCanvas(_gridCanvas, _gridCanvas.width, rows);
+    _gridContext.putImageData(imgData, 0, 0);
+    _disableSmoothing(_context);
+    _drawHeight = rows * _cellSize;
+    _context.drawImage(_gridCanvas, 0, _offset, _canvas.width, _drawHeight);
+    return true;
+}
+
 // Initialize the user interface.
 function initUI() {
     _initEventHandlers();
@@ -190,6 +208,7 @@ function _selectDefaults() {
 export {
     viewElements,
     initCanvases,
+    verticalResize,
     initUI,
     drawNextFrame,
     newColors,
