@@ -1,6 +1,5 @@
-import { init, update } from "automaton-controller";
-import { FPS } from "constants";
+import { init, mainLoop } from "automaton-controller";
 
 init();
-setInterval(update, 1000 / FPS);
+mainLoop();
 

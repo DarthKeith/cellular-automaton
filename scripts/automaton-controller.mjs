@@ -15,6 +15,7 @@ import {
     changeCellSize
 } from "automaton-view";
 import {
+    FRAME_DURATION,
     RESIZE_DELAY,
     DEFAULT_NUM_STATES,
     DEFAULT_CELL_SIZE
@@ -34,10 +35,19 @@ function init() {
     _resize();
 }
 
-// Update the display with the next frame of animation.
-function update() {
-    if (_isPaused) return;
-    drawNextFrame(getNextCellStates);
+// Start the main loop of the program.
+function mainLoop() {
+    let t0 = document.timeline.currentTime;
+    function update(t) {
+        if (t - t0 >= FRAME_DURATION) {
+            if (!_isPaused) {
+                drawNextFrame(getNextCellStates);
+            }
+            t0 += FRAME_DURATION;
+        }
+        requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
 }
 
 // ----------------------------------------------------------------------------
@@ -116,5 +126,5 @@ function _initEventHandlers() {
 
 // ----------------------------------------------------------------------------
 
-export { init, update };
+export { init, mainLoop };
 
