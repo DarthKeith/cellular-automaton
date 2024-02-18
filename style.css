@@ -63,7 +63,9 @@ button, .ctl-group > label, .ctl-group, .btn-group, #settings {
 }
 
 #canvas {
+    display: block;
     cursor: default;
+    image-rendering: pixelated;
 }
 
 #settings {
