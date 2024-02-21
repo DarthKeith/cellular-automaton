@@ -26,7 +26,7 @@ const viewElements = {
 // Initialize the canvases and return the automaton length in cells.
 function initCanvases() {
     _resizeCanvas(_canvas, window.innerWidth, window.innerHeight);
-    const cols = Math.round(_canvas.width / _cellSize);
+    const cols = Math.floor(_canvas.width / _cellSize);
     const rows = 1 + Math.ceil(_canvas.height / _cellSize);
     _resizeCanvas(_gridCanvas, cols, rows);
     _resizeCanvas(_rowCanvas, cols, 1);
@@ -34,7 +34,9 @@ function initCanvases() {
     _pixelArray = _rowImgData.data;
     _initAlpha(_pixelArray);
     _disableSmoothing(_context);
+    _drawWidth = cols * _cellSize;
     _drawHeight = rows * _cellSize;
+    _gutter = Math.floor((_canvas.width - _drawWidth) / 2);
     _offset = -SCROLL_DIST;
     return cols;
 }
@@ -53,7 +55,7 @@ function verticalResize() {
     _gridContext.putImageData(imgData, 0, 0);
     _disableSmoothing(_context);
     _drawHeight = rows * _cellSize;
-    _context.drawImage(_gridCanvas, 0, _offset, _canvas.width, _drawHeight);
+    _context.drawImage(_gridCanvas, _gutter, _offset, _drawWidth, _drawHeight);
     return true;
 }
 
@@ -71,7 +73,7 @@ function drawNextFrame(getNextCellStates) {
         _scrollGrid(n, getNextCellStates);
         _offset -= n * _cellSize;
     }
-    _context.drawImage(_gridCanvas, 0, _offset, _canvas.width, _drawHeight);
+    _context.drawImage(_gridCanvas, _gutter, _offset, _drawWidth, _drawHeight);
 }
 
 // Set the color array to random colors.
@@ -103,8 +105,10 @@ let _rowImgData; // Image data for row of pixels to draw onto grid canvas.
 let _pixelArray; // Pixel array for row of pixels.
 let _colorMap; // Array mapping cell states to colors.
 let _cellSize = DEFAULT_CELL_SIZE; // Width of each cell in pixels.
+let _drawWidth; // Width to draw image onto canvas.
 let _drawHeight; // Height to draw image onto canvas.
-let _offset; // Vertical downward distance from top to draw image onto canvas.
+let _gutter; // Distance from left to draw image onto canvas.
+let _offset; // Downward distance from top to draw image onto canvas.
 
 // ----------------------------------------------------------------------------
 //                             Private Functions
