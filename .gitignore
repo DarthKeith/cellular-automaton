@@ -1,6 +1,12 @@
 # Used to manage project dependencies
 node_modules/
 
+# Contains package dependencies and metadata
+.spago/
+
+# PureScript build artifacts
+output/
+
 # Temporary file created by the PureScript REPL
 .purs-repl
 
