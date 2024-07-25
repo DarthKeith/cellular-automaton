@@ -1,0 +1,12 @@
+# Used to manage project dependencies
+node_modules/
+
+# Temporary file created by the PureScript REPL
+.purs-repl
+
+# Personal to-do list
+.todo
+
+# Store any other untracked files here
+temp/
+
