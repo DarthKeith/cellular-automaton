@@ -1,8 +1,10 @@
 {
   "devDependencies": {
+    "esbuild": "0.23.0",
     "http-server": "^14.1.1"
   },
   "scripts": {
-    "start": "http-server"
+    "start": "http-server docs/",
+    "build": "spago build && node build.mjs"
   }
 }

@@ -1,5 +1,7 @@
 import { init, mainLoop } from "automaton-controller";
 
-init();
-mainLoop();
+export function main() {
+    init();
+    mainLoop();
+}
 

@@ -1,10 +1,10 @@
-import { buildRandColorArray } from "array-util";
+import { buildRandColorArray } from "./array-util.mjs";
 import {
     MAX_NUM_STATES,
     DEFAULT_NUM_STATES,
     DEFAULT_CELL_SIZE,
     SCROLL_DIST
- } from "constants";
+ } from "./constants.mjs";
 
 // ----------------------------------------------------------------------------
 //                             Public Variables

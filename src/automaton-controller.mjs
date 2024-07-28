@@ -4,7 +4,7 @@ import {
     initCells,
     newRule,
     getNextCellStates
-} from "automaton-model";
+} from "./automaton-model.mjs";
 import {
     viewElements,
     initCanvases,
@@ -13,13 +13,13 @@ import {
     drawNextFrame,
     newColors,
     changeCellSize
-} from "automaton-view";
+} from "./automaton-view.mjs";
 import {
     FRAME_DURATION,
     RESIZE_DELAY,
     DEFAULT_NUM_STATES,
     DEFAULT_CELL_SIZE
-} from "constants";
+} from "./constants.mjs";
 
 // ----------------------------------------------------------------------------
 //                             Public Functions

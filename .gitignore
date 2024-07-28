@@ -1,6 +1,9 @@
 # Used to manage project dependencies
 node_modules/
 
+# PureScript REPL cache
+.psci_modules
+
 # Contains package dependencies and metadata
 .spago/
 
