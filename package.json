@@ -1,10 +1,14 @@
 {
-  "devDependencies": {
-    "esbuild": "0.23.0",
-    "http-server": "^14.1.1"
-  },
+  "name": "cellular-automaton",
+  "version": "0.0.1",
+  "description": "A web application for exploring cellular automata governed by randomly generated iteration rules.",
+  "author": "Keith Kaplan",
   "scripts": {
     "start": "http-server docs/",
     "build": "spago build && node build.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "0.23.0",
+    "http-server": "^14.1.1"
   }
 }
