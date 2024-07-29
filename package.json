@@ -3,9 +3,10 @@
   "version": "0.0.1",
   "description": "A web application for exploring cellular automata governed by randomly generated iteration rules.",
   "author": "Keith Kaplan",
+  "type": "module",
   "scripts": {
     "start": "http-server docs/",
-    "build": "spago build && node build.mjs"
+    "build": "spago build && node build.js"
   },
   "devDependencies": {
     "esbuild": "0.23.0",
