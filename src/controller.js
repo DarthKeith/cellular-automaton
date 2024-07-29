@@ -4,7 +4,7 @@ import {
     initCells,
     newRule,
     getNextCellStates
-} from "./automaton-model.js";
+} from "./model.js";
 import {
     viewElements,
     initCanvases,
@@ -13,7 +13,7 @@ import {
     drawNextFrame,
     newColors,
     changeCellSize
-} from "./automaton-view.js";
+} from "./view.js";
 import {
     FRAME_DURATION,
     RESIZE_DELAY,
