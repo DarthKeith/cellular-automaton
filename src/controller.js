@@ -4,7 +4,7 @@ import {
     initCells,
     newRule,
     getNextCellStates
-} from "./model.js";
+} from "model";
 import {
     viewElements,
     initCanvases,
@@ -13,13 +13,13 @@ import {
     drawNextFrame,
     newColors,
     changeCellSize
-} from "./view.js";
+} from "view";
 import {
     FRAME_DURATION,
     RESIZE_DELAY,
     DEFAULT_NUM_STATES,
     DEFAULT_CELL_SIZE
-} from "./constants.js";
+} from "constants";
 
 // ----------------------------------------------------------------------------
 //                             Public Functions

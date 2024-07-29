@@ -3,7 +3,7 @@ import {
     buildZeroArray2D,
     randInt,
     buildRandCubeArray
-} from "./array-util.js";
+} from "array-util";
 
 // ----------------------------------------------------------------------------
 //                             Public Functions
