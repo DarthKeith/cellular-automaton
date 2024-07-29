@@ -1,8 +1,9 @@
 module Main where
 
 import Prelude
-
 import Effect (Effect)
+import Controller (init, mainLoop)
 
-foreign import main :: Effect Unit
+main :: Effect Unit
+main = init *> mainLoop
 
