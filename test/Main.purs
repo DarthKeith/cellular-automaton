@@ -4,8 +4,10 @@ import Prelude
 
 import Effect (Effect)
 import Effect.Class.Console (log)
+import Test.ArrayUtil as ArrayUtilTest
 
 main :: Effect Unit
 main = do
-  log "🍝"
-  log "You should add some tests."
+    log "Testing module ArrayUtil"
+    ArrayUtilTest.run
+

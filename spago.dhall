@@ -5,6 +5,7 @@
     , "foldable-traversable"
     , "integers"
     , "prelude"
+    , "quickcheck"
     , "random"
     , "unfoldable"
     ]
