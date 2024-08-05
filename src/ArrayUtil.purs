@@ -1,5 +1,6 @@
 module ArrayUtil
-( buildZeroArray
+( Rule
+, buildZeroArray
 , buildZeroArray2D
 , randInt
 , buildRandCubeArray
@@ -13,14 +14,14 @@ import Data.Unfoldable (replicate)
 import Effect (Effect)
 import Effect.Random (random)
 
-type Array2D a = Array (Array a)
-type Array3D a = Array (Array (Array a))
+type IntArray2D = Array (Array Int)
+type Rule = Array (Array (Array Int))
 type Color = Array Int
 
 buildZeroArray :: Int -> Array Int
 buildZeroArray len = replicate len 0
 
-buildZeroArray2D :: Int -> Int -> Array2D Int
+buildZeroArray2D :: Int -> Int -> IntArray2D
 buildZeroArray2D rows cols = replicate rows (buildZeroArray cols)
 
 randInt :: Int -> Effect Int
@@ -31,11 +32,11 @@ randInt n = do
 buildRandArray :: Int -> Int -> Effect (Array Int)
 buildRandArray len n = traverse (\_ -> randInt n) $ buildZeroArray len
 
-buildRandArray2D :: Int -> Int -> Int -> Effect (Array2D Int)
+buildRandArray2D :: Int -> Int -> Int -> Effect IntArray2D
 buildRandArray2D rows cols n =
     traverse (\_ -> buildRandArray cols n) $ buildZeroArray rows
 
-buildRandCubeArray :: Int -> Effect (Array3D Int)
+buildRandCubeArray :: Int -> Effect Rule
 buildRandCubeArray n =
     traverse (\_ -> buildRandArray2D n n n) $ buildZeroArray n
 
