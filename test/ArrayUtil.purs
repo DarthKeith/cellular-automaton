@@ -2,7 +2,6 @@ module Test.ArrayUtil (run) where
 
 import Prelude
 import ArrayUtil as A
-
 import Data.Array (length)
 import Data.Foldable (all)
 import Data.Int (pow)
@@ -70,6 +69,15 @@ prop_CubeArray (PosInt10 n) =
     inRange k = 0 <= k && k < n
     msg = "buildRandomCubeArray " <> show n <> ":\n" <> show cube
 
+prop_ColorArray :: NatNum2k -> Result
+prop_ColorArray (NatNum2k len) =
+    (length arr == len) && (all validColor arr) <?> msg
+    where
+    arr = unsafePerformEffect $ A.buildRandColorArray len
+    validColor bs = (length bs == 3) && (all isByte bs)
+    isByte b = 0 <= b && b < 256
+    msg = "buildRandColorArray " <> show len <> ":\n" <> show arr
+
 run :: Effect Unit
 run = do
     log "Test: buildZeroArray"
@@ -82,4 +90,6 @@ run = do
     quickCheck prop_randInt1
     log "Test: buildRandCubeArray"
     quickCheck prop_CubeArray
+    log "Test: buildRandColorArray"
+    quickCheck prop_ColorArray
 
