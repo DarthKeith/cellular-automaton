@@ -8,7 +8,7 @@ module ArrayUtil
 
 import Prelude
 import Data.Int (floor, toNumber)
-import Data.Traversable (traverse)
+import Data.Traversable (sequence, traverse)
 import Data.Unfoldable (replicate)
 import Effect (Effect)
 import Effect.Random (random)
@@ -40,11 +40,8 @@ buildRandCubeArray n =
     traverse (\_ -> buildRandArray2D n n n) $ buildZeroArray n
 
 randColor :: Effect Color
-randColor = do
-    r <- randInt 256
-    g <- randInt 256
-    b <- randInt 256
-    pure [r, g, b]
+randColor = sequence [byte, byte, byte]
+    where byte = randInt 256
 
 buildRandColorArray :: Int -> Effect (Array Color)
 buildRandColorArray len = traverse (\_ -> randColor) $ buildZeroArray len
