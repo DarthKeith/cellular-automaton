@@ -1,4 +1,4 @@
-{ name = "my-project"
+{ name = "cellular-automaton"
 , dependencies =
     [ "arrays"
     , "console"
