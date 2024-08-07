@@ -1,10 +1,10 @@
 module ArrayUtil
 ( Rule
+, buildRandColorArray
+, buildRandCubeArray
 , buildZeroArray
 , buildZeroArray2D
 , randInt
-, buildRandCubeArray
-, buildRandColorArray
 ) where
 
 import Prelude
