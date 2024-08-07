@@ -4,6 +4,7 @@
     , "console"
     , "effect"
     , "foldable-traversable"
+    , "functions"
     , "integers"
     , "prelude"
     , "quickcheck"
