@@ -6,10 +6,12 @@
   "type": "module",
   "scripts": {
     "start": "http-server docs/",
-    "build": "spago build && node build.js"
+    "build": "spago build && node build.js",
+    "serve-dev": "parcel dev/index.html --open"
   },
   "devDependencies": {
     "esbuild": "0.23.0",
-    "http-server": "^14.1.1"
+    "http-server": "^14.1.1",
+    "parcel": "^2.12.0"
   }
 }

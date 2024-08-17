@@ -5,6 +5,7 @@
     , "effect"
     , "foldable-traversable"
     , "functions"
+    , "halogen"
     , "integers"
     , "prelude"
     , "quickcheck"
