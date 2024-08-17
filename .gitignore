@@ -10,6 +10,12 @@ node_modules/
 # PureScript build artifacts
 output/
 
+# Parcel production build files
+dist/
+
+# Parcel build cache
+.parcel-cache/
+
 # Temporary file created by the PureScript REPL
 .purs-repl
 
