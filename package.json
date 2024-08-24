@@ -5,13 +5,12 @@
   "author": "Keith Kaplan",
   "type": "module",
   "scripts": {
-    "start": "http-server docs/",
+    "start": "parcel docs/index.html --open",
     "build": "spago build && node build.js",
     "serve-dev": "parcel dev/index.html --open"
   },
   "devDependencies": {
     "esbuild": "0.23.0",
-    "http-server": "^14.1.1",
     "parcel": "^2.12.0"
   }
 }
